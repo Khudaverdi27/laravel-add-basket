@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: darryl
- * Date: 1/12/2015
- * Time: 10:23 PM
- */
+
 
 class SessionMock {
 

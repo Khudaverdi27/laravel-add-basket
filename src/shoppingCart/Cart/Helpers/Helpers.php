@@ -1,11 +1,6 @@
 <?php namespace shoppingBasket\Cart\Helpers;
 
-/**
- * Created by PhpStorm.
- * User: darryl
- * Date: 1/15/2015
- * Time: 8:09 PM
- */
+
 
 class Helpers {
 

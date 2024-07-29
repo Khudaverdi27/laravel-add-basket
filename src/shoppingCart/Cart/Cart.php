@@ -156,11 +156,9 @@ class Cart
      */
     public function add($id, $name = null, $price = null, $quantity = null, $attributes = array(), $conditions = array(), $associatedModel = null)
     {
-        // if the first argument is an array,
-        // we will need to call add again
+   
         if (is_array($id)) {
-            // the first argument is an array, now we will need to check if it is a multi dimensional
-            // array, if so, we will iterate through each item and call add again
+        
             if (Helpers::isMultiArray($id)) {
                 foreach ($id as $item) {
                     $this->add(
@@ -201,13 +199,12 @@ class Cart
             $data['associatedModel'] = $associatedModel;
         }
 
-        // validate data
+      
         $item = $this->validate($data);
 
-        // get the cart
         $cart = $this->getContent();
 
-        // if the item is already in the cart we will just update it
+       
         if ($cart->has($id)) {
 
             $this->update($id, $item);
@@ -242,15 +239,15 @@ class Cart
         $item = $cart->pull($id);
 
         foreach ($data as $key => $value) {
-            // if the key is currently "quantity" we will need to check if an arithmetic
-            // symbol is present so we can decide if the update of quantity is being added
-            // or being reduced.
+            
+            
+            
             if ($key == 'quantity') {
-                // we will check if quantity value provided is array,
-                // if it is, we will need to check if a key "relative" is set
-                // and we will evaluate its value if true or false,
-                // this tells us how to treat the quantity value if it should be updated
-                // relatively to its current quantity value or just totally replace the value
+                
+                
+                
+                
+                
                 if (is_array($value)) {
                     if (isset($value['relative'])) {
                         if ((bool)$value['relative']) {
@@ -290,10 +287,7 @@ class Cart
             $conditionInstance = "\\shoppingBasket\\Cart\\CartCondition";
 
             if ($itemCondition instanceof $conditionInstance) {
-                // we need to copy first to a temporary variable to hold the conditions
-                // to avoid hitting this error "Indirect modification of overloaded element of shoppingBasket\Cart\ItemCollection has no effect"
-                // this is due to laravel Collection instance that implements Array Access
-                // // see link for more info: http://stackoverflow.com/questions/20053269/indirect-modification-of-overloaded-element-of-splfixedarray-has-no-effect
+             
                 $itemConditionTempHolder = $product['conditions'];
 
                 if (is_array($itemConditionTempHolder)) {
@@ -303,7 +297,7 @@ class Cart
                 }
 
                 $this->update($productId, array(
-                    'conditions' => $itemConditionTempHolder // the newly updated conditions
+                    'conditions' => $itemConditionTempHolder 
                 ));
             }
         }
@@ -373,7 +367,7 @@ class Cart
 
         $conditions = $this->getConditions();
 
-        // Check if order has been applied
+        
         if ($condition->getOrder() == 0) {
             $last = $conditions->last();
             $condition->setOrder(!is_null($last) ? $last->getOrder() + 1 : 1);
@@ -475,18 +469,11 @@ class Cart
         }
 
         if ($this->itemHasConditions($item)) {
-            // NOTE:
-            // we do it this way, we get first conditions and store
-            // it in a temp variable $originalConditions, then we will modify the array there
-            // and after modification we will store it again on $item['conditions']
-            // This is because of ArrayAccess implementation
-            // see link for more info: http://stackoverflow.com/questions/20053269/indirect-modification-of-overloaded-element-of-splfixedarray-has-no-effect
+        
 
             $tempConditionsHolder = $item['conditions'];
 
-            // if the item's conditions is in array format
-            // we will iterate through all of it and check if the name matches
-            // to the given name the user wants to remove, if so, remove it
+           
             if (is_array($tempConditionsHolder)) {
                 foreach ($tempConditionsHolder as $k => $condition) {
                     if ($condition->getName() == $conditionName) {
@@ -497,10 +484,10 @@ class Cart
                 $item['conditions'] = $tempConditionsHolder;
             }
 
-            // if the item condition is not an array, we will check if it is
-            // an instance of a Condition, if so, we will check if the name matches
-            // on the given condition name the user wants to remove, if so,
-            // lets just make $item['conditions'] an empty array as there's just 1 condition on it anyway
+            
+            
+            
+            
             else {
                 $conditionInstance = "shoppingBasket\\Cart\\CartCondition";
 
@@ -582,25 +569,25 @@ class Cart
             return $item->getPriceSumWithConditions(false);
         });
 
-        // get the conditions that are meant to be applied
-        // on the subtotal and apply it here before returning the subtotal
+        
+        
         $conditions = $this
             ->getConditions()
             ->filter(function (CartCondition $cond) {
                 return $cond->getTarget() === 'subtotal';
             });
 
-        // if there is no conditions, lets just return the sum
+        
         if (!$conditions->count()) return Helpers::formatValue(floatval($sum), $formatted, $this->config);
 
-        // there are conditions, lets apply it
+        
         $newTotal = 0.00;
         $process = 0;
 
         $conditions->each(function (CartCondition $cond) use ($sum, &$newTotal, &$process) {
 
-            // if this is the first iteration, the toBeCalculated
-            // should be the sum as initial point of value.
+            
+            
             $toBeCalculated = ($process > 0) ? $newTotal : $sum;
 
             $newTotal = $cond->applyCondition($toBeCalculated);
@@ -630,7 +617,7 @@ class Cart
                 return $cond->getTarget() === 'total';
             });
 
-        // if no conditions were added, just return the sub total
+        
         if (!$conditions->count()) {
             return Helpers::formatValue($subTotal, $this->config['format_numbers'], $this->config);
         }
@@ -790,8 +777,8 @@ class Cart
         if (preg_match('/\-/', $value) == 1) {
             $value = (int)str_replace('-', '', $value);
 
-            // we will not allowed to reduced quantity to 0, so if the given value
-            // would result to item quantity of 0, we will not do it.
+            
+            
             if (($item[$key] - $value) > 0) {
                 $item[$key] -= $value;
             }

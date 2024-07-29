@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: darryl
- * Date: 3/18/2015
- * Time: 6:17 PM
- */
+
 
 use shoppingBasket\Cart\Cart;
 use Mockery as m;

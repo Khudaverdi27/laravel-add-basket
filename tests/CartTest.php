@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: darryl
- * Date: 1/12/2015
- * Time: 9:59 PM
- */
 
 use shoppingBasket\Cart\Cart;
 use Mockery as m;
@@ -128,14 +122,14 @@ class CartTest extends PHPUnit\Framework\TestCase
         );
         $this->cart->add($item);
 
-        // lets get the attribute and prove first its an instance of
-        // ItemAttributeCollection
+        
+        
         $item = $this->cart->get(456);
 
         $this->assertInstanceOf('shoppingBasket\Cart\ItemAttributeCollection', $item->attributes);
 
-        // now lets update the item with its new attributes
-        // when we get that item from cart, it should still be an instance of ItemAttributeCollection
+        
+        
         $updatedItem = array(
             'attributes' => array(
                 'product_id' => '145',
@@ -198,7 +192,7 @@ class CartTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(67.99, $item['price'], 'Item price should be "67.99"');
         $this->assertEquals(3, $item['quantity'], 'Item quantity should be 3');
 
-        // when cart's item quantity is updated, the subtotal should be updated as well
+        
         $this->cart->update(456, array(
             'name' => 'Renamed',
             'quantity' => 2,
@@ -229,11 +223,11 @@ class CartTest extends PHPUnit\Framework\TestCase
         $item = $this->cart->get($itemIdToEvaluate);
         $this->assertEquals(3, $item['quantity'], 'Item quantity should be 3');
 
-        // now by default when an update takes place and the quantity attribute
-        // is present, it will evaluate for arithmetic operation if the quantity
-        // should be incremented or decremented, we should also allow the quantity
-        // value to be in array format and provide a field if the quantity should not be
-        // treated as relative to Item quantity current value
+        
+        
+        
+        
+        
         $this->cart->update($itemIdToEvaluate, array('quantity' => array('relative' => false, 'value' => 5)));
 
         $item = $this->cart->get($itemIdToEvaluate);
@@ -242,7 +236,7 @@ class CartTest extends PHPUnit\Framework\TestCase
 
     public function test_item_price_should_be_normalized_when_added_to_cart()
     {
-        // add a price in a string format should be converted to float
+        
         $this->cart->add(455, 'Sample Item', '100.99', 2, array());
 
         $this->assertIsFloat($this->cart->getContent()->first()['price'], 'Cart price should be a float');
@@ -314,7 +308,7 @@ class CartTest extends PHPUnit\Framework\TestCase
 
         $this->assertEquals(187.49, $this->cart->getSubTotal(), 'Cart should have sub total of 187.49');
 
-        // if we remove an item, the sub total should be updated as well
+        
         $this->cart->remove(456);
 
         $this->assertEquals(119.5, $this->cart->getSubTotal(), 'Cart should have sub total of 119.5');
@@ -343,7 +337,7 @@ class CartTest extends PHPUnit\Framework\TestCase
 
         $this->assertEquals(273.22, $this->cart->getSubTotal(), 'Cart should have sub total of 273.22');
 
-        // when cart's item quantity is updated, the subtotal should be updated as well
+        
         $this->cart->update(456, array('quantity' => 2));
 
         $this->assertEquals(409.2, $this->cart->getSubTotal(), 'Cart should have sub total of 409.2');
@@ -372,10 +366,10 @@ class CartTest extends PHPUnit\Framework\TestCase
 
         $this->assertEquals(273.22, $this->cart->getSubTotal(), 'Cart should have sub total of 273.22');
 
-        // when cart's item quantity is updated, the subtotal should be updated as well
+        
         $this->cart->update(456, array('quantity' => -1));
 
-        // get the item to be evaluated
+        
         $item = $this->cart->get(456);
 
         $this->assertEquals(2, $item['quantity'], 'Item quantity of with item ID of 456 should now be reduced to 2');
@@ -403,14 +397,14 @@ class CartTest extends PHPUnit\Framework\TestCase
 
         $this->cart->add($items);
 
-        // get the item to be evaluated
+        
         $item = $this->cart->get(456);
 
-        // prove first we have quantity of 3
+        
         $this->assertEquals(3, $item['quantity'], 'Item quantity of with item ID of 456 should be reduced to 3');
 
-        // when cart's item quantity is updated, and reduced to more than the current quantity
-        // this should not work
+        
+        
         $this->cart->update(456, array('quantity' => -3));
 
         $this->assertEquals(3, $item['quantity'], 'Item quantity of with item ID of 456 should now be reduced to 2');
@@ -457,7 +451,7 @@ class CartTest extends PHPUnit\Framework\TestCase
 
         $this->assertFalse($this->cart->isEmpty(), 'prove first cart is not empty');
 
-        // now let's clear cart
+        
         $this->cart->clear();
 
         $this->assertTrue($this->cart->isEmpty(), 'cart should now be empty');
@@ -486,7 +480,7 @@ class CartTest extends PHPUnit\Framework\TestCase
 
         $this->assertFalse($this->cart->isEmpty(), 'prove first cart is not empty');
 
-        // now let's count the cart's quantity
+        
         $this->assertIsInt($this->cart->getTotalQuantity(), 'Return type should be INT');
         $this->assertEquals(4, $this->cart->getTotalQuantity(), 'Cart\'s quantity should be 4.');
     }

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: darryl
- * Date: 1/12/2015
- * Time: 9:59 PM
- */
+
 
 use shoppingBasket\Cart\Cart;
 use Mockery as m;
@@ -67,7 +62,7 @@ class CartTestOtherFormat extends PHPUnit\Framework\TestCase  {
 
         $this->assertEquals('187,490', $this->cart->getSubTotal(), 'Cart should have sub total of 187,490');
 
-        // if we remove an item, the sub total should be updated as well
+        
         $this->cart->remove(456);
 
         $this->assertEquals('119,500', $this->cart->getSubTotal(), 'Cart should have sub total of 119,500');
@@ -96,7 +91,7 @@ class CartTestOtherFormat extends PHPUnit\Framework\TestCase  {
 
         $this->assertEquals('273,220', $this->cart->getSubTotal(), 'Cart should have sub total of 273.22');
 
-        // when cart's item quantity is updated, the subtotal should be updated as well
+        
         $this->cart->update(456, array('quantity' => 2));
 
         $this->assertEquals('409,200', $this->cart->getSubTotal(), 'Cart should have sub total of 409.2');
@@ -125,10 +120,10 @@ class CartTestOtherFormat extends PHPUnit\Framework\TestCase  {
 
         $this->assertEquals('273,220', $this->cart->getSubTotal(), 'Cart should have sub total of 273.22');
 
-        // when cart's item quantity is updated, the subtotal should be updated as well
+        
         $this->cart->update(456, array('quantity' => -1));
 
-        // get the item to be evaluated
+        
         $item = $this->cart->get(456);
 
         $this->assertEquals(2, $item['quantity'], 'Item quantity of with item ID of 456 should now be reduced to 2');

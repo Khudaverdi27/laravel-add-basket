@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: darryl
- * Date: 1/16/2015
- * Time: 1:45 PM
- */
+
 
 use shoppingBasket\Cart\Cart;
 use Mockery as m;
@@ -52,7 +47,7 @@ class CartTestMultipleInstances extends PHPUnit\Framework\TestCase {
 
     public function test_cart_multiple_instances()
     {
-        // add 3 items on cart 1
+        
         $itemsForCart1 = array(
             array(
                 'id' => 456,
@@ -83,7 +78,7 @@ class CartTestMultipleInstances extends PHPUnit\Framework\TestCase {
         $this->assertCount(3, $this->cart1->getContent()->toArray(), 'Cart should have 3 items');
         $this->assertEquals('shopping', $this->cart1->getInstanceName(), 'Cart 1 should have instance name of "shopping"');
 
-        // add 1 item on cart 2
+        
         $itemsForCart2 = array(
             array(
                 'id' => 456,

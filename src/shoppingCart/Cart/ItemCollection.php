@@ -1,11 +1,6 @@
 <?php namespace shoppingBasket\Cart;
 
-/**
- * Created by PhpStorm.
- * User: darryl
- * Date: 1/17/2015
- * Time: 11:03 AM
- */
+
 
 use shoppingBasket\Cart\Helpers\Helpers;
 use Illuminate\Support\Collection;
